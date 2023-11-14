@@ -1,0 +1,74 @@
+% 1
+is_substring(Sub, Str) :-
+    append(_, SubSuffix, Str),
+    append(Sub, _, SubSuffix).
+
+find_substring_position(Sub, S, Pos) :-
+    append(_, SubSuffix, S),
+    append(Sub, _, SubSuffix),
+    length(Sub, Pos).
+
+is_palindrome(S) :-
+    reverse(S, S).
+
+% 2
+
+set_union(Set1, Set2, Union) :-
+    append(Set1, Set2, Union).
+
+set_intersection(Set1, Set2, Intersection) :-
+    findall(Element, (member(Element, Set1), member(Element, Set2)), Intersection).
+
+set_complement(UniversalSet, Set, Complement) :-
+    subtract(UniversalSet, Set, Complement).
+
+% 3
+has_parent(james, alice).
+has_parent(james, ben).
+has_parent(alice, charlotte).
+has_parent(ben, daniel).
+has_parent(alice, emma).
+has_parent(ben, frank).
+has_parent(charlotte, grace). 
+has_parent(charlotte, hank). 
+
+is_mother(M, P) :- has_parent(M, P), female(M).
+is_father(F, P) :- has_parent(F, P), male(F).
+is_sibling(X, Y) :- has_parent(Z, X), has_parent(Z, Y), X \= Y.
+
+is_grandparent(GP, GC) :- has_parent(GP, P), has_parent(P, GC).
+is_uncle(U, N) :- is_sibling(U, P), has_parent(P, N), male(U).
+is_aunt(A, N) :- is_sibling(A, P), has_parent(P, N), female(A).
+is_sister(S, N) :- female(S), is_sibling(S, N).
+is_brother(B, N) :- male(B), is_sibling(B, N).
+
+% 4a
+student_result_info('Michael White', 101, 'Math', 100, 85).
+student_result_info('Sophia Turner', 102, 'Physics', 100, 78).
+student_result_info('Daniel Davis', 103, 'Chemistry', 100, 92).
+student_result_info('Emma Miller', 104, 'Biology', 100, 88).
+student_result_info('Oliver Wilson', 105, 'English', 100, 75).
+student_result_info('Grace Evans', 106, 'History', 100, 94).
+
+calculate_student_result_percentage(Name, MaxMarks, ObtainedMarks, Percentage) :-
+    Percentage is (ObtainedMarks / MaxMarks) * 100,
+    format('~w: ~w%~n', [Name, Percentage]).
+
+% 4b
+employee_info('David', 'IT', 'Software Developer', 30, 55000, 16000).
+
+calculate_employee_da(BasicSalary, DA) :-
+    DA is 0.15 * BasicSalary.
+
+calculate_employee_gross_salary(BasicSalary, HRA, DA, GrossSalary) :-
+    GrossSalary is BasicSalary + HRA + DA.
+
+generate_employee_payslip(EmployeeName, Department, Designation, Age, BasicSalary, HRA, DA, GrossSalary) :-
+    format('Payslip for ~w~n', [EmployeeName]),
+    format('Department: ~w~n', [Department]),
+    format('Designation: ~w~n', [Designation]),
+    format('Age: ~w~n', [Age]),
+    format('Basic Salary: ~w~n', [BasicSalary]),
+    format('HRA: ~w~n', [HRA]),
+    format('DA: ~w~n', [DA]),
+    format('Gross Salary: ~w~n', [GrossSalary]).
